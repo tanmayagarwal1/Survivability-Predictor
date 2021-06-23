@@ -24,11 +24,23 @@ This is one of the major steps which can make or break the entire model. We need
 All the steps in the data preprocessing phase ensure that the data is highly consistent throughout. Emphasis is largely made on eliminating any occurring null values. The model does not work well under the influence of null values. Having null values increases the chances of bugs and errors in the data model which is highly non trivial. Also this might be highly non trivial, but null values take up more space than other placeholders
 The next part in this process is data visualisation. Knowing before hand, the at- tributes which are strongly co-related to each other ensures that the model can be emphasised to use them in the appropriate priority. We can setup a priority in training as to train highly co-related values with much emphasis cause these values have a higher chance of boosting accuracy figures
 <p> </p>
-<p> </p>
-<img width="450" alt="Screenshot 2021-06-23 at 6 41 31 PM" src="https://user-images.githubusercontent.com/81710149/123103099-50ecc380-d453-11eb-9547-b3266bd9f251.png">
-<p> </p>
-<img width="450" alt="Screenshot 2021-06-23 at 6 42 09 PM" src="https://user-images.githubusercontent.com/81710149/123102575-d623a880-d452-11eb-9a93-fe11439d2801.png">
 
+```python 
+df.hist(figsize=(12,12))
+```
+<p align = 'center'>
+<img width="758" alt="Screenshot 2021-06-23 at 7 02 54 PM" src="https://user-images.githubusercontent.com/81710149/123105768-b2159680-d455-11eb-803d-f81a6a6c9166.png">
+</p>
+
+```python
+sns.countplot(df['Survived'])
+(df.Survived.value_counts(normalize=True)*100).plot.barh()
+sns.countplot(x='Age-Range', hue='Survived', data=df)
+sns.countplot(x='Age-Range',data=df)
+```
+<p align = 'center'> 
+  <img width="748" alt="Screenshot 2021-06-23 at 7 11 25 PM" src="https://user-images.githubusercontent.com/81710149/123107080-d58d1100-d456-11eb-8fd4-ea44552d30c4.png">
+</p>
 We have split the data into 7:3 ratio in which the former part constitutes the training data and the latter the testing data. This ratio is appropriate the provide enough data in the testing phase such that the model neither overfits not does it under fit. This division is a sweet spot for general machine learning algorithms and works like a charm for our proposed as well as base paper implemented algorithms.
 
 # Custom Artificial Neural Network 
@@ -49,11 +61,23 @@ The third layer uses the softmax activation function, which turns the entire inp
 We compile the model using the Adam optimiser which is used in the place of traditional stochastic gradient descent. Adam has been derived from the phrase Adaptive Motion Estimation. Adam does not have any sort of constraints on hyper parameter tuning as well as they are quite intuitive in nature. It is also not computationally dense and can be used of large datasets without any hassle.
 
 ```Python
-class node:
-  def __init__(self, data):
-    pass 
+model = Sequential()
+n_cols = X_train.shape[1]
+model.add(Dense(39, activation='relu', input_shape=(n_cols,)))
+model.add(Dense(27, activation='selu'))
+model.add(Dense(19, activation='softplus'))
+model.add(Dense(1, kernel_regularizer=keras.regularizers.l2(1e-2),activation='sigmoid'))
+model.compile(optimizer=keras.optimizers.Adam(learning_rate=0.0001), loss='binary_crossentropy',metrics=['accuracy'])
+model.fit(X_train, y_train, shuffle=False,epochs=160 )
 
 ````
+
+## Results and Validation 
+Having implemented all the algorithms successfully, we have to now analyse all the accuracies which we have obtained by training and testing our model. The below tabular illustrates an overall accuracy picture which will give us detailed information for analysis purpose.
+
+From this we conclude that our implemented Custom Neural Network gives the highest accuracy of 86 percentile while giving the lowest amount of False values. The accuracies vary with a certain degree on margin of error because of system constraints and definition of functions. This margin of error is minimal as it was intended
+
+Our other main reasons to deploy bio inspired algorithms is that they are computationally less expensive. When compared to traditional algorithms like the Stochastic Gradient Descent algorithm, which uses first and second order partial differential equations for search optimisation, bio inspired algorithms use linear algebra which is not only less expensive on the system, hardware but also faster to compute.
 
 
 

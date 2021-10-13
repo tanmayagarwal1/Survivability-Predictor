@@ -80,5 +80,5 @@ From this we conclude that our implemented Custom Neural Network gives the highe
 Our other main reasons to deploy bio inspired algorithms is that they are computationally less expensive. When compared to traditional algorithms like the Stochastic Gradient Descent algorithm, which uses first and second order partial differential equations for search optimisation, bio inspired algorithms use linear algebra which is not only less expensive on the system, hardware but also faster to compute.
 
 
-
+create table le0(ole_app_id bigint, ole_app_status varchar(20), medicare_number varchar(200), medicare_number_type varchar(100), contract_id varchar(100), prb_num int, plan_name varchar(200), plan_type varchar(50), zip_code int, site_id varchar(50), gps_confirmation_number bigint, ole_data varchar(250), creation_date DATETIME, last_modified_date DATETIME, created_by varchar(30), modified_by varchar(30), update_num int, plan_year year, description varchar(250), session_id bigint, zip_code_str int, effective_date DATE);
 
